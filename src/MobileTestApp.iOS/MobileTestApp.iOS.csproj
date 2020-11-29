@@ -26,6 +26,7 @@
         <MtouchArch>x86_64</MtouchArch>
         <MtouchLink>None</MtouchLink>
         <MtouchDebug>true</MtouchDebug>
+        <LangVersion>8.0</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
         <DebugType>none</DebugType>
@@ -35,6 +36,7 @@
         <WarningLevel>4</WarningLevel>
         <MtouchLink>None</MtouchLink>
         <MtouchArch>x86_64</MtouchArch>
+        <LangVersion>8.0</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
         <DebugSymbols>true</DebugSymbols>
@@ -48,6 +50,8 @@
         <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
         <CodesignKey>iPhone Developer</CodesignKey>
         <MtouchDebug>true</MtouchDebug>
+        <MtouchLink>SdkOnly</MtouchLink>
+        <LangVersion>8.0</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
         <DebugType>none</DebugType>
@@ -58,6 +62,8 @@
         <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
         <MtouchArch>ARM64</MtouchArch>
         <CodesignKey>iPhone Developer</CodesignKey>
+        <MtouchLink>SdkOnly</MtouchLink>
+        <LangVersion>8.0</LangVersion>
     </PropertyGroup>
     <ItemGroup>
         <Reference Include="System" />
@@ -68,7 +74,15 @@
         <Reference Include="System.Numerics.Vectors" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+      <PackageReference Include="MvvmCross">
+        <Version>7.1.2</Version>
+      </PackageReference>
+      <PackageReference Include="Xamarin.Essentials">
+        <Version>1.5.3.2</Version>
+      </PackageReference>
+      <PackageReference Include="sqlite-net-pcl">
+        <Version>1.7.335</Version>
+      </PackageReference>
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -116,10 +130,10 @@
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Resources\" />
-    </ItemGroup>
-    <ItemGroup>
-        <InterfaceDefinition Include="LaunchScreen.storyboard" />
-        <InterfaceDefinition Include="Main.storyboard" />
+        <Folder Include="UI\" />
+        <Folder Include="UI\Views\" />
+        <Folder Include="UI\Views\Abstract\" />
+        <Folder Include="Assets.xcassets\LaunchImage.imageset\" />
     </ItemGroup>
     <ItemGroup>
         <None Include="Info.plist" />
@@ -128,11 +142,22 @@
     <ItemGroup>
         <Compile Include="Main.cs" />
         <Compile Include="AppDelegate.cs" />
-        <Compile Include="SceneDelegate.cs" />
-        <Compile Include="ViewController.cs" />
-        <Compile Include="ViewController.designer.cs">
-            <DependentUpon>ViewController.cs</DependentUpon>
+        <Compile Include="Setup.cs" />
+        <Compile Include="UI\Views\LoginView.cs" />
+        <Compile Include="UI\Views\LoginView.designer.cs">
+          <DependentUpon>LoginView.cs</DependentUpon>
         </Compile>
+        <Compile Include="UI\Views\Abstract\BaseView{TViewModel}.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\MobileTestApp\MobileTestApp.csproj">
+        <Project>{258E8DD4-B150-4466-88FF-A2CBF6129B73}</Project>
+        <Name>MobileTestApp</Name>
+      </ProjectReference>
+    </ItemGroup>
+    <ItemGroup>
+      <InterfaceDefinition Include="UI\Views\LoginView.xib" />
+      <InterfaceDefinition Include="LaunchScreen.storyboard" />
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
