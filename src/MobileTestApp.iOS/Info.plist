@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>MobileTestApp.iOS</string>
+	<string>MobileTestApp</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.shevchuk.TestApp</string>
 	<key>CFBundleShortVersionString</key>
@@ -19,8 +19,6 @@
 		<integer>1</integer>
 		<integer>2</integer>
 	</array>
-	<key>UIMainStoryboardFile</key>
-	<string>Main</string>
 	<key>UIMainStoryboardFile~ipad</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

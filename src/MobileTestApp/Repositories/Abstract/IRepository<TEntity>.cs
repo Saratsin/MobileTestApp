@@ -15,6 +15,8 @@ namespace MobileTestApp.Repositories.Abstract
 
         Task<int> SaveAsync(TEntity entity);
 
+        Task<int> SaveAllAsync(IEnumerable<TEntity> entities);
+
         Task<int> DeleteAsync(TEntity entity);
 
         Task<int> DeleteAsync(object primaryKey);

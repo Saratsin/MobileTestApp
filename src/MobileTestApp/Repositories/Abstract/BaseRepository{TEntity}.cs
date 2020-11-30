@@ -48,6 +48,23 @@ namespace MobileTestApp.Repositories.Abstract
             return result;
         }
 
+        public virtual async Task<int> SaveAllAsync(IEnumerable<TEntity> entities)
+        {
+            var connection = await GetConnectionAsync().ConfigureAwait(false);
+            var result = 0;
+
+            await connection.RunInTransactionAsync(connection =>
+            {
+                foreach(var entity in entities)
+                {
+                    result += connection.InsertOrReplace(entity);
+                }
+
+            }).ConfigureAwait(false);
+
+            return result;
+        }
+
         public virtual async Task<int> DeleteAsync(TEntity entity)
         {
             var connection = await GetConnectionAsync().ConfigureAwait(false);

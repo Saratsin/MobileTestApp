@@ -4,7 +4,7 @@ using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace MobileTestApp.Facories.Commands
+namespace MobileTestApp.Factories.Commands
 {
     public class CommandsFactory : ICommandsFactory
     {

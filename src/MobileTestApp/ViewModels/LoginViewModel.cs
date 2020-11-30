@@ -1,8 +1,9 @@
 ﻿using MobileTestApp.Common.Extensions;
 using MobileTestApp.Common.Utils;
-using MobileTestApp.Repositories.Users;
+using MobileTestApp.Managers.Notes;
+using MobileTestApp.Managers.Users;
+using MobileTestApp.Models;
 using MobileTestApp.ViewModels.Abstract;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -10,11 +11,16 @@ namespace MobileTestApp.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
-        private readonly IUsersRepository _usersRepository;
+        private const string DemoUserUsername = "demo";
+        private static bool _isFirstCall = true;
 
-        public LoginViewModel(IUsersRepository usersRepository)
+        private readonly IUsersManager _usersManager;
+        private readonly INotesManager _notesManager;
+
+        public LoginViewModel(IUsersManager usersManager, INotesManager notesManager)
         {
-            _usersRepository = usersRepository;
+            _usersManager = usersManager;
+            _notesManager = notesManager;
 
             LoginCommand = this.CreateCommand(LoginAsync);
         }
@@ -42,7 +48,32 @@ namespace MobileTestApp.ViewModels
             private set => SetProperty(ref _validationText, value);
         }
 
-        public async Task LoginAsync()
+        protected override async Task InitializeAsync()
+        {
+            if (!_isFirstCall)
+            {
+                return;
+            }
+
+            _isFirstCall = false;
+
+            var demoUser = await _usersManager.GetUserOrDefaultAsync(DemoUserUsername).ConfigureAwait(false);
+            if (demoUser != null)
+            {
+                return;
+            }
+
+            await _usersManager.AddUserAsync(DemoUserUsername, "demo");
+            demoUser = await _usersManager.GetUserOrDefaultAsync(DemoUserUsername).ConfigureAwait(false);
+
+            for (var i = 0; i < 100; ++i)
+            {
+                var note = _notesManager.CreateRandomNoteForUser(demoUser);
+                await _notesManager.AddNoteAsync(note).ConfigureAwait(false);
+            }
+        }
+
+        private async Task LoginAsync()
         {
             if (string.IsNullOrEmpty(Username))
             {
@@ -56,8 +87,7 @@ namespace MobileTestApp.ViewModels
                 return;
             }
 
-            var users = await _usersRepository.GetAllAsync(user => user.Username == Username).ConfigureAwait(false);
-            var user = users.FirstOrDefault();
+            var user = await _usersManager.GetUserOrDefaultAsync(Username).ConfigureAwait(false);
             if (user is null)
             {
                 ValidationText = $"User with username {Username} not found";
@@ -72,7 +102,7 @@ namespace MobileTestApp.ViewModels
             }
 
             ValidationText = null;
-            await NavigationService.Navigate<MainViewModel>().ConfigureAwait(false);
+            await NavigationService.Navigate<MainViewModel, User>(user).ConfigureAwait(false);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using MobileTestApp.Facories.Commands;
+﻿using MobileTestApp.Factories.Commands;
 using MobileTestApp.ViewModels.Abstract;
 using MvvmCross;
 using System;

@@ -83,6 +83,12 @@
       <PackageReference Include="sqlite-net-pcl">
         <Version>1.7.335</Version>
       </PackageReference>
+      <PackageReference Include="MvvmCross.Plugin.Messenger">
+        <Version>7.1.2</Version>
+      </PackageReference>
+      <PackageReference Include="System.Reactive">
+        <Version>5.0.0</Version>
+      </PackageReference>
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -127,6 +133,13 @@
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
             <Visible>false</Visible>
         </ImageAsset>
+        <ImageAsset Include="Resources\Assets.xcassets\Contents.json" />
+        <ImageAsset Include="Assets.xcassets\ic_tab_overview.imageset\Contents.json" />
+        <ImageAsset Include="Assets.xcassets\ic_tab_overview.imageset\ic_tab_overview.pdf" />
+        <ImageAsset Include="Assets.xcassets\ic_tab_edit.imageset\Contents.json" />
+        <ImageAsset Include="Assets.xcassets\ic_tab_edit.imageset\ic_tab_edit.pdf" />
+        <ImageAsset Include="Assets.xcassets\ic_tab_logout.imageset\Contents.json" />
+        <ImageAsset Include="Assets.xcassets\ic_tab_logout.imageset\ic_tab_logout.pdf" />
     </ItemGroup>
     <ItemGroup>
         <Folder Include="Resources\" />
@@ -134,6 +147,12 @@
         <Folder Include="UI\Views\" />
         <Folder Include="UI\Views\Abstract\" />
         <Folder Include="Assets.xcassets\LaunchImage.imageset\" />
+        <Folder Include="UI\Views\Tabs\" />
+        <Folder Include="Assets.xcassets\ic_tab_overview.imageset\" />
+        <Folder Include="Assets.xcassets\ic_tab_edit.imageset\" />
+        <Folder Include="Assets.xcassets\ic_tab_logout.imageset\" />
+        <Folder Include="UI\Views\Tabs\Cells\" />
+        <Folder Include="UI\Views\Abstract\Cells\" />
     </ItemGroup>
     <ItemGroup>
         <None Include="Info.plist" />
@@ -148,6 +167,24 @@
           <DependentUpon>LoginView.cs</DependentUpon>
         </Compile>
         <Compile Include="UI\Views\Abstract\BaseView{TViewModel}.cs" />
+        <Compile Include="UI\Views\MainView.cs" />
+        <Compile Include="UI\Views\Tabs\OverviewTabView.cs" />
+        <Compile Include="UI\Views\Tabs\OverviewTabView.designer.cs">
+          <DependentUpon>OverviewTabView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Views\Tabs\EditTabView.cs" />
+        <Compile Include="UI\Views\Tabs\EditTabView.designer.cs">
+          <DependentUpon>EditTabView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Views\Tabs\LogoutTabView.cs" />
+        <Compile Include="UI\Views\Tabs\LogoutTabView.designer.cs">
+          <DependentUpon>LogoutTabView.cs</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Views\Tabs\Cells\NoteCell.cs" />
+        <Compile Include="UI\Views\Tabs\Cells\NoteCell.designer.cs">
+          <DependentUpon>NoteCell.cs</DependentUpon>
+        </Compile>
+        <Compile Include="UI\Views\Abstract\Cells\BaseTableViewCell.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\MobileTestApp\MobileTestApp.csproj">
@@ -158,6 +195,10 @@
     <ItemGroup>
       <InterfaceDefinition Include="UI\Views\LoginView.xib" />
       <InterfaceDefinition Include="LaunchScreen.storyboard" />
+      <InterfaceDefinition Include="UI\Views\Tabs\OverviewTabView.xib" />
+      <InterfaceDefinition Include="UI\Views\Tabs\EditTabView.xib" />
+      <InterfaceDefinition Include="UI\Views\Tabs\LogoutTabView.xib" />
+      <InterfaceDefinition Include="UI\Views\Tabs\Cells\NoteCell.xib" />
     </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
